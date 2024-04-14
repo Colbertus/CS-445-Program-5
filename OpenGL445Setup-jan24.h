@@ -26,7 +26,6 @@ void my_3d_projection(int width, int height)
 	// Set the viewing volume for perspective projection and camera placement 
 	gluPerspective(90.0, width_bound / height_bound, 10.0, 1010.0);
 	gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0);
-	glMatrixMode(GL_MODELVIEW);
 }
 
 #define STRT_X_POS 25
