@@ -38,30 +38,55 @@ void rotateUAH(int value) {
 	glutTimerFunc(15, rotateUAH, 0);
 }
 
-void UAH() {
+void drawSpindle() {
+	
+	glLoadIdentity(); 
+	glColor3f(0.4, 0.4, 0.4);
+	glBegin(GL_TRIANGLES);
+	glVertex3f(0, 0, -400);
+	glVertex3f(-25, 75, -400);
+	glVertex3f(25, 75, -400);
+	glEnd();
+}
 
+void drawUAH() {
+
+	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
-	glShadeModel(GL_FLAT);
-	GLfloat light_position[] = {0.0, 0.0, 0.0, 1.0};
-	GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 	glEnable(GL_LIGHT0);
 
+	GLfloat light_position[] = {0.0, 0.0, 0.0, 1.0};
+	GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
+	GLfloat light_ambient[] = {0.25, 0.25, 0.25, 0.25};
+	GLfloat light_diffuse[] = {0.75, 0.75, 0.75, 1.0};
+
+	GLfloat uh_specular[] = {1.0, 1.0, 1.0, 1.0};
+	GLfloat uh_ambient[] = {0.75, 0.75, 0.75, 1.0};
+	GLfloat uh_diffuse[] = {0.75, 0.75, 0.75, 1.0};
+	GLfloat uh_shininess = {30.0};
+
+	GLfloat ball_shininess = {30.0}; 
+
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+	glEnable(GL_COLOR_MATERIAL);
 
 	glColor3f(0.75, 0.75, 0.75); 
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glTranslatef(0, 175, -400); 
+	glTranslatef(0, 0, -400); 
 
 	glRotatef(rotate, 0, 1, 0);
 
-	glTranslatef(0, -175, 400);
+	glTranslatef(0, 0, 400);
 
 	// 'U' portion 
-	glTranslatef(-350, 0, -400);
+	glTranslatef(-350, -25, -400);
 	glutSolidCube(50); 
 	glTranslatef(0, -50, 0);
 	glutSolidCube(50);
@@ -114,18 +139,9 @@ void UAH() {
 	glTranslatef(25, 50, 0);
 	glutSolidSphere(25, 50, 50);
 
-	// Spindle portion
-	glColor3f(0.9, 0.9, 0.9);
-	glTranslatef(0, 75, 0);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(-25, 75, 0);
-	glVertex3f(25, 75, 0);
-	glEnd();
-
 	// 'H' portion
 	glColor3f(0.75, 0.75, 0.75);
-	glTranslatef(200, -175, 0); 
+	glTranslatef(200, -100, 0); 
 	glutSolidCube(50);
 	glTranslatef(0, 50, 0);
 	glutSolidCube(50);
@@ -159,7 +175,9 @@ void display_func(void)
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	UAH();
+	drawUAH();
+	drawSpindle();
+
 	// Swap the buffers
     glutSwapBuffers();
 }
